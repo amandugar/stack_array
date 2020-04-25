@@ -1,81 +1,113 @@
-#include<stdio.h>
-#include<conio.h>
-#include<stdlib.h>
-#define size 5
-void push(int);
-void pop();
-void display();
-struct stack_DT
-{
-  int a[size];
-  int top;
+#include <stdio.h>
+#define MAXSIZE 5
+ 
+struct stack{
+    int stk[MAXSIZE];
+    int top;
 };
-typedef struct stack_DT stack;
-stack st;
-void main(){
-int n,n1;
-char ch;
-st.top=-1;
-do
+
+struct stack s;
+ 
+void push(void);
+void pop(void);
+void display(void);
+void search(void);
+
+void main ()
 {
-printf("entre your choice");
-printf("1.push\n 2.pop\n 3.display\n 4.exit");
-scanf("%d",&n);
-switch(n)
-{
-case 1:printf("entre the element which you want to insert in stack");
-       scanf("%d",&n1);
-       push(n1);
-       break;
-case 2:pop();
-       break;
-case 3:display();
-       break;
-       default: exit(0);
-}
-printf("do you want to continue y/n");
-scanf("%s",&ch);
-}while(ch=='y'||ch=='Y');
+    int choice;
+    int option = 1;
+    s.top = -1;
+ 
+    printf ("STACK OPERATION\n");
+    while (option)
+    {
+        printf ("------------------------------------------\n");
+        printf ("      1    -->    PUSH               \n");
+        printf ("      2    -->    POP               \n");
+        printf ("      3    -->    DISPLAY               \n");
+        printf ("      4    -->    SEARCH               \n");
+        printf ("      5    -->    EXIT           \n");
+        printf ("------------------------------------------\n");
+ 
+        printf ("Enter your choice\n");
+        scanf    ("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            push();
+            break;
+        case 2:
+            pop();
+            break;
+        case 3:
+            display();
+            break;
+        case 4:
+            search();
+            break;
+        case 5:
+            return;
+        }
+        fflush (stdin);
+        printf ("Do you want to continue(Type 0 or 1)?\n");
+        scanf    ("%d", &option);
+    }
 }
 
-void push(int b)
- {
- if(st.top==size-1)
-   {
-     printf("stack is over flow");
-   }
-   else
-   {
-     st.top++;
-     st.a[st.top]=b;
-     printf("element succesfully inserted");
-   }
- }
-void pop()
- {
-   int temp;
-   if(st.top==-1)
-   {
-     printf("stack is underflow");
-   }
-   else
-   {
-     temp=st.a[st.top];
-     st.top--;
-     printf("%d element succesfully deleted from stack",temp);
-   }
- }
- void display()
- {
-   int x;
-   x=st.top;
-   if(st.top==-1)
-   {
-     printf("stack is under flow");
-   }
-   else
-   for(x=4;x>=0;x--)
-   {
-     printf("%d",st.a[x]);
-   }
- }
+void push(){
+    int num;
+    if (s.top ==(MAXSIZE-1)){
+        printf("Stack is Full\n");
+        return;
+    } else {
+        printf("Enter the value to be entered\n");
+        scanf("%d",&num);
+        s.top++;
+        s.stk[s.top] = num;
+    }
+    return;
+}
+
+void pop(){
+    int num;
+    if(s.top == -1){
+        printf("stack is Empty\n");
+        return;
+    } else {
+        num = s.stk[s.top];
+        printf("Element popped out is %d\n",num);
+        s.top--;
+    }
+}
+ 
+void display(){
+    int i;
+    if(s.top == -1){
+        printf("Stack is Empty");
+        return;
+    } else {
+        printf("The values in the stack are : \n");
+        for(i=s.top;i>=0;i--){
+            printf("%d\n",s.stk[i]);
+        }
+    }
+}
+
+void search(){
+    int i,num;
+    printf("Enter the element to be searched");
+    scanf("%d",&num);
+    if(s.top == -1){
+        printf("Stack is Empty");
+        return;
+    } else {
+        for(i=s.top;i>=0;i--){
+            if(s.stk[i]==num){
+                printf("Element found at %d",MAXSIZE-i);
+                return;
+            }
+        }
+        printf("Element not found");
+    }
+}
